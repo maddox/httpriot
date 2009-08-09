@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5560902D102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h in Headers */ = {isa = PBXBuildFile; fileRef = 5560902B102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h */; };
+		5560902E102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560902C102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m */; };
 		D00045D70FF2D5DB00CCAF1B /* ISAPeopleDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00045D60FF2D5DB00CCAF1B /* ISAPeopleDetailController.m */; };
 		D00047610FF31D4D00CCAF1B /* ISAEditableTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D00047600FF31D4D00CCAF1B /* ISAEditableTextFieldCell.m */; };
 		D00048240FF35B0E00CCAF1B /* NSObject+InvocationUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D00048220FF35B0E00CCAF1B /* NSObject+InvocationUtils.h */; };
@@ -145,8 +147,10 @@
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		5560902B102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CapitalizedFirstWord.h"; sourceTree = "<group>"; };
+		5560902C102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CapitalizedFirstWord.m"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8DC2EF5B0486A6940098B216 /* HTTPRiot */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.framework; path = HTTPRiot; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DC2EF5B0486A6940098B216 /* HTTPRiot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HTTPRiot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D00045D50FF2D5DB00CCAF1B /* ISAPeopleDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAPeopleDetailController.h; sourceTree = "<group>"; };
 		D00045D60FF2D5DB00CCAF1B /* ISAPeopleDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAPeopleDetailController.m; sourceTree = "<group>"; };
 		D000475F0FF31D4D00CCAF1B /* ISAEditableTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAEditableTextFieldCell.h; sourceTree = "<group>"; };
@@ -286,7 +290,7 @@
 		034768DFFF38A50411DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8DC2EF5B0486A6940098B216 /* HTTPRiot */,
+				8DC2EF5B0486A6940098B216 /* HTTPRiot.framework */,
 				D0298A650F3FFBBD00EC8C01 /* libhttpriot.a */,
 				D0788AE80FABAB3600C3207D /* iPhoneUnitTestsRunner.app */,
 				D038BDCE0FF298330041F570 /* iPhoneSampleApp.app */,
@@ -348,6 +352,8 @@
 			children = (
 				D02989330F3FBEDC00EC8C01 /* NSDictionary+ParamUtils.h */,
 				D02989340F3FBEDC00EC8C01 /* NSDictionary+ParamUtils.m */,
+				5560902B102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h */,
+				5560902C102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m */,
 				D02989370F3FBEDC00EC8C01 /* NSString+EscapingUtils.h */,
 				D02989380F3FBEDC00EC8C01 /* NSString+EscapingUtils.m */,
 				D00048220FF35B0E00CCAF1B /* NSObject+InvocationUtils.h */,
@@ -562,6 +568,7 @@
 				D03982E90FFD6385005FECE7 /* HROperationQueue.h in Headers */,
 				D08B9AF7101685AF00351DC4 /* HRResponseDelegate.h in Headers */,
 				D08B9AF8101685B000351DC4 /* NSObject+InvocationUtils.h in Headers */,
+				5560902D102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,7 +626,7 @@
 			name = HTTPRiot;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = HTTPRiot;
-			productReference = 8DC2EF5B0486A6940098B216 /* HTTPRiot */;
+			productReference = 8DC2EF5B0486A6940098B216 /* HTTPRiot.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		D0298A640F3FFBBD00EC8C01 /* libhttpriot */ = {
@@ -787,6 +794,7 @@
 				D0A6E4140FFD39F100012097 /* HRBase64.m in Sources */,
 				D03982EA0FFD6385005FECE7 /* HROperationQueue.m in Sources */,
 				D08B9AF9101685B200351DC4 /* NSObject+InvocationUtils.m in Sources */,
+				5560902E102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
