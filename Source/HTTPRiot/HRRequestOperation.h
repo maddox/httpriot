@@ -45,6 +45,9 @@
     /// The object passed to all delegate methods
     id              _object;
     
+    /// The callback selector passed to all delegate methods 
+    SEL             _selector;
+    
     /// Determines whether the operation is finished
     BOOL _isFinished;
     
@@ -109,5 +112,5 @@
 /**
  * Returns an HRRequestOperation
  */
-+ (HRRequestOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString*)urlPath options:(NSDictionary*)requestOptions object:(id)obj;
++ (HRRequestOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString*)urlPath options:(NSDictionary*)requestOptions object:(id)obj selector:(SEL)selector;
 @end

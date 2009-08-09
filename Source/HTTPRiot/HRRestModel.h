@@ -223,6 +223,7 @@ extern NSString *kHRClassAttributesParamsKeys;
  * @param name the name of the this request
  * @param options The options for this request.
  * @param object An object to be passed to the delegate methods
+ * @param selector the selector to perform on the delegate object
  *
  * <strong>Note:</strong>  There are two important options you can set on post request.  Setting the 
  * <tt>params</tt> option will cause the request to be posted as <tt>application/x-www-form-urlencoded</tt> data.
@@ -230,7 +231,7 @@ extern NSString *kHRClassAttributesParamsKeys;
  * option will cause the <tt>params</tt> option to be ignored.
  *
  */
-+ (NSOperation *)getPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
++ (NSOperation *)getPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj selector:(SEL)selector;
 
 /**
  * Send a POST request
@@ -239,6 +240,7 @@ extern NSString *kHRClassAttributesParamsKeys;
  * @param name the name of the this request
  * @param options The options for this request.
  * @param object An object to be passed to the delegate methods
+ * @param selector the selector to perform on the delegate object
  *
  * <strong>Note:</strong>  There are two important options you can set on post request.  Setting the 
  * <tt>params</tt> option will cause the request to be posted as <tt>application/x-www-form-urlencoded</tt> data.
@@ -246,7 +248,7 @@ extern NSString *kHRClassAttributesParamsKeys;
  * option will cause the <tt>params</tt> option to be ignored.
  *
  */
-+ (NSOperation *)postPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
++ (NSOperation *)postPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj selector:(SEL)selector;
 
 /**
  * Send a PUT request
@@ -255,12 +257,13 @@ extern NSString *kHRClassAttributesParamsKeys;
  * @param name the name of the this request
  * @param options The options for this request.
  * @param object An object to be passed to the delegate methods
+ * @param selector the selector to perform on the delegate object
  *
  * @remarks <strong>Note:</strong>  All data found in the <tt>body</tt> option will be PUT.  Setting the <tt>body</tt>
  * option will cause the <tt>params</tt> option to be ignored.
  *
  */
-+ (NSOperation *)putPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
++ (NSOperation *)putPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj selector:(SEL)selector;
 
 /**
  * Send a DELETE request
@@ -269,9 +272,10 @@ extern NSString *kHRClassAttributesParamsKeys;
  * @param name the name of the this request
  * @param options The options for this request.
  * @param object An object to be passed to the delegate methods
+ * @param selector the selector to perform on the delegate object
  *
  */
-+ (NSOperation *)deletePath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
++ (NSOperation *)deletePath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj selector:(SEL)selector;
 
 //@}
 @end
