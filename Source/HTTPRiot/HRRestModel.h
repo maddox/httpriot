@@ -9,6 +9,7 @@
 #import "HRGlobal.h"
 
 extern NSString *kHRClassAttributesDelegateKey;
+extern NSString *kHRClassAttributesNameKey;
 extern NSString *kHRClassAttributesBaseURLKey;
 extern NSString *kHRClassAttributesHeadersKey;
 extern NSString *kHRClassAttributesBasicAuthKey;
@@ -214,5 +215,63 @@ extern NSString *kHRClassAttributesParamsKeys;
  *
  */
 + (NSOperation *)deletePath:(NSString *)path withOptions:(NSDictionary *)options object:(id)object;
+
+/**
+ * Send a POST request
+ * @param path The path to POST to.  If you haven't setup the baseURL option you'll need to provide a 
+ *        full url. 
+ * @param name the name of the this request
+ * @param options The options for this request.
+ * @param object An object to be passed to the delegate methods
+ *
+ * <strong>Note:</strong>  There are two important options you can set on post request.  Setting the 
+ * <tt>params</tt> option will cause the request to be posted as <tt>application/x-www-form-urlencoded</tt> data.
+ * If you'd like to post raw data like JSON or XML you'll need to set the <tt>body</tt> option.  Setting the <tt>body</tt>
+ * option will cause the <tt>params</tt> option to be ignored.
+ *
+ */
++ (NSOperation *)getPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
+
+/**
+ * Send a POST request
+ * @param path The path to POST to.  If you haven't setup the baseURL option you'll need to provide a 
+ *        full url. 
+ * @param name the name of the this request
+ * @param options The options for this request.
+ * @param object An object to be passed to the delegate methods
+ *
+ * <strong>Note:</strong>  There are two important options you can set on post request.  Setting the 
+ * <tt>params</tt> option will cause the request to be posted as <tt>application/x-www-form-urlencoded</tt> data.
+ * If you'd like to post raw data like JSON or XML you'll need to set the <tt>body</tt> option.  Setting the <tt>body</tt>
+ * option will cause the <tt>params</tt> option to be ignored.
+ *
+ */
++ (NSOperation *)postPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
+
+/**
+ * Send a PUT request
+ * @param path The path to PUT to.  If you haven't setup the baseURL option you'll need to provide a 
+ *        full url. 
+ * @param name the name of the this request
+ * @param options The options for this request.
+ * @param object An object to be passed to the delegate methods
+ *
+ * @remarks <strong>Note:</strong>  All data found in the <tt>body</tt> option will be PUT.  Setting the <tt>body</tt>
+ * option will cause the <tt>params</tt> option to be ignored.
+ *
+ */
++ (NSOperation *)putPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
+
+/**
+ * Send a DELETE request
+ * @param path The path to DELETE.  If you haven't setup the baseURL option you'll need to provide a 
+ *        full url. 
+ * @param name the name of the this request
+ * @param options The options for this request.
+ * @param object An object to be passed to the delegate methods
+ *
+ */
++ (NSOperation *)deletePath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj;
+
 //@}
 @end

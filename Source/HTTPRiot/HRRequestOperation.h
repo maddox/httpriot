@@ -18,6 +18,9 @@
     /// HRResponse Delegate
     NSObject        <HRResponseDelegate>*_delegate;
     
+    /// HRResponse delegate method name prefix
+    NSString        *_name;
+	
     /// Connection object
     NSURLConnection *_connection;
     
@@ -58,8 +61,20 @@
  * a request.
  */
 @property (nonatomic, readonly, assign) NSObject <HRResponseDelegate>*delegate;
- 
-/// The lenght of time in seconds before the request times out.
+
+/// The name prefix for all delegeate methods for this request.
+/**
+ * By default, the delegate methods are named "restConnection:...". However, if you want 
+ * the same delegate to respond to multiple requests, you can instead provide a name for
+ * your request, which will then use delegate methods like "<name>RestConnection:...". 
+ * For example, if you create a request method with the name "login", your delegate method
+ * would be "loginRestConnection:didReturnResource:object:". When the name property is set,
+ * the formal HRResponseDelegate protocol no longer applies, and an informal protocol with 
+ * the same delegate methods prefixed with your name is used instead.
+ */
+@property (nonatomic, readonly, retain) NSString *name;
+
+/// The length of time in seconds before the request times out.
 /**
  * Sets the length of time in seconds before a request will timeout.
  * This defaults to <tt>30.0</tt>.

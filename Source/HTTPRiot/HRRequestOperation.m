@@ -35,11 +35,13 @@
 @synthesize options         = _options;
 @synthesize formatter       = _formatter;
 @synthesize delegate        = _delegate;
+@synthesize name            = _name;
 
 - (void)dealloc {
     [_path release];
     [_options release];
     [_formatter release];
+    [_name release];
     [super dealloc];
 }
 
@@ -55,6 +57,7 @@
         _object         = obj;
         _timeout        = 30.0;
         _delegate       = [[opts valueForKey:@"delegate"] nonretainedObjectValue];
+        _name           = [[opts valueForKey:@"name"] retain];
         _formatter      = [[self formatterFromFormat] retain];
     }
 
@@ -125,17 +128,31 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - NSURLConnection delegates
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {    
-    if ([_delegate respondsToSelector:@selector(restConnection:didReceiveResponse:object:)]) {
-        [_delegate performSelectorOnMainThread:@selector(restConnection:didReceiveResponse:object:) withObjects:connection, response, _object, nil];
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
+    SEL didReceiveResponseSelector = @selector(restConnection:didReceiveResponse:object:);
+    if (_name) {
+        SEL namedDidReceiveResponseSelector = NSSelectorFromString([NSString stringWithFormat:@"%@RestConnection:didReceiveResponse:object:", _name]);
+        if([_delegate respondsToSelector:namedDidReceiveResponseSelector]) {
+            didReceiveResponseSelector = namedDidReceiveResponseSelector;
+        }
+    }
+    if ([_delegate respondsToSelector:didReceiveResponseSelector]) {
+        [_delegate performSelectorOnMainThread:didReceiveResponseSelector withObjects:connection, response, _object, nil];
     }
     
     NSError *error = nil;
     [[self class] handleResponse:(NSHTTPURLResponse *)response error:&error];
     
     if(error) {
-        if([_delegate respondsToSelector:@selector(restConnection:didReceiveError:response:object:)]) {
-            [_delegate performSelectorOnMainThread:@selector(restConnection:didReceiveError:response:object:) withObjects:connection, error, response, _object, nil];
+        SEL didReceiveErrorSelector = @selector(restConnection:didReceiveError:response:object:);
+        if (_name) {
+            SEL namedDidReceiveErrorSelector = NSSelectorFromString([NSString stringWithFormat:@"%@RestConnection:didReceiveError:response:object:", _name]);
+            if([_delegate respondsToSelector:namedDidReceiveErrorSelector]) {
+                didReceiveErrorSelector = namedDidReceiveErrorSelector;
+            }
+        }
+        if([_delegate respondsToSelector:didReceiveErrorSelector]) {
+            [_delegate performSelectorOnMainThread:didReceiveErrorSelector withObjects:connection, error, response, _object, nil];
             [connection cancel];
             [self finish];
         }
@@ -149,8 +166,15 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {    
-    if([_delegate respondsToSelector:@selector(restConnection:didFailWithError:object:)]) {        
-        [_delegate performSelectorOnMainThread:@selector(restConnection:didFailWithError:object:) withObjects:connection, error, _object, nil];
+    SEL didFailWithErrorSelector = @selector(restConnection:didFailWithError:object:);
+    if (_name) {
+        SEL namedDidFailWithErrorSelector = NSSelectorFromString([NSString stringWithFormat:@"%@RestConnection:didFailWithError:object:", _name]);
+        if([_delegate respondsToSelector:namedDidFailWithErrorSelector]) {
+            didFailWithErrorSelector = namedDidFailWithErrorSelector;
+        }
+    }
+    if([_delegate respondsToSelector:didFailWithErrorSelector]) {        
+        [_delegate performSelectorOnMainThread:didFailWithErrorSelector withObjects:connection, error, _object, nil];
     }
     
     [self finish];
@@ -165,8 +189,15 @@
         
         if(parseError) {
             NSString *rawString = [[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding];
-            if([_delegate respondsToSelector:@selector(restConnection:didReceiveParseError:responseBody:object:)]) {
-                [_delegate performSelectorOnMainThread:@selector(restConnection:didReceiveParseError:responseBody:object:) withObjects:connection, parseError, rawString, _object, nil];                
+            SEL didReceiveParseErrorSelector = @selector(restConnection:didReceiveParseError:responseBody:object:);
+            if (_name) {
+                SEL namedDidReceiveParseErrorSelector = NSSelectorFromString([NSString stringWithFormat:@"%@RestConnection:didReceiveParseError:responseBody:object:", _name]);
+                if([_delegate respondsToSelector:namedDidReceiveParseErrorSelector]) {
+                    didReceiveParseErrorSelector = namedDidReceiveParseErrorSelector;
+                }
+            }
+            if([_delegate respondsToSelector:didReceiveParseErrorSelector]) {
+                [_delegate performSelectorOnMainThread:didReceiveParseErrorSelector withObjects:connection, parseError, rawString, _object, nil];                
             }
             
             [rawString release];
@@ -176,8 +207,15 @@
         }  
     }
 
-    if([_delegate respondsToSelector:@selector(restConnection:didReturnResource:object:)]) {        
-        [_delegate performSelectorOnMainThread:@selector(restConnection:didReturnResource:object:) withObjects:connection, results, _object, nil];
+    SEL didReturnResourceSelector = @selector(restConnection:didReturnResource:object:);
+    if (_name) {
+        SEL namedDidReturnResourceSelector = NSSelectorFromString([NSString stringWithFormat:@"%@RestConnection:didReturnResource:object:", _name]);
+        if([_delegate respondsToSelector:namedDidReturnResourceSelector]) {
+            didReturnResourceSelector = namedDidReturnResourceSelector;
+        }
+    }
+    if([_delegate respondsToSelector:didReturnResourceSelector]) {        
+        [_delegate performSelectorOnMainThread:didReturnResourceSelector withObjects:connection, results, _object, nil];
     }
         
     [self finish];

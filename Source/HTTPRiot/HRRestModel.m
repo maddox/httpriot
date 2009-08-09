@@ -10,6 +10,7 @@
 #import "HRRequestOperation.h"
 
 NSString *kHRClassAttributesDelegateKey         = @"delegate";
+NSString *kHRClassAttributesNameKey             = @"name";
 NSString *kHRClassAttributesBaseURLKey          = @"baseURL";
 NSString *kHRClassAttributesHeadersKey          = @"headers";
 NSString *kHRClassAttributesBasicAuthKey        = @"basicAuth";
@@ -24,6 +25,7 @@ NSString *kHRClassAttributesParamsKeys          = @"params";
 + (NSMutableDictionary *)classAttributes;
 + (NSMutableDictionary *)mergedOptions:(NSDictionary *)options;
 + (NSOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString *)path options:(NSDictionary *)options object:(id)obj;
++ (NSOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString *)path named:(NSString *)name options:(NSDictionary *)options object:(id)obj;
 @end
 
 @implementation HRRestModel
@@ -127,11 +129,34 @@ static NSMutableDictionary *attributes;
     return [self requestWithMethod:HRRequestMethodDelete path:path options:options object:obj];        
 }
 
++ (NSOperation *)getPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj {
+    return [self requestWithMethod:HRRequestMethodGet path:path named:name options:options object:obj];               
+}
+
++ (NSOperation *)postPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj {
+    return [self requestWithMethod:HRRequestMethodPost path:path named:name options:options object:obj];                
+}
+
++ (NSOperation *)putPath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj {
+    return [self requestWithMethod:HRRequestMethodPut path:path named:name options:options object:obj];              
+}
+
++ (NSOperation *)deletePath:(NSString *)path named:(NSString *)name withOptions:(NSDictionary *)options object:(id)obj {
+    return [self requestWithMethod:HRRequestMethodDelete path:path named:name options:options object:obj];        
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private
 
 + (NSOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString *)path options:(NSDictionary *)options object:(id)obj {
+    return [self requestWithMethod:method path:path named:nil options:options object:obj];
+}
+
++ (NSOperation *)requestWithMethod:(HRRequestMethod)method path:(NSString *)path named:(NSString *)name options:(NSDictionary *)options object:(id)obj {
     NSMutableDictionary *opts = [self mergedOptions:options];
+    if (name) {
+        [opts setObject:name forKey:@"name"];
+    }
     return [HRRequestOperation requestWithMethod:method path:path options:opts object:obj];
 }
 
