@@ -134,11 +134,13 @@
     if (delegate) {
         if (_name) {
             NSString *namedSelectorStr = [NSString stringWithFormat:@"%@%@", _name, [baseSelectorStr capitalizedFirstWord]];
-            NSString *namedSelectorWithSelectorStr = [NSString stringWithFormat:@"%@selector:", namedSelectorStr];
-            SEL namedSelectorWithSelector = NSSelectorFromString(namedSelectorWithSelectorStr);
-            if ([delegate respondsToSelector:namedSelectorWithSelector]) {
-                *usedSelector = YES;
-                return namedSelectorWithSelector;
+            if (_selector) {
+                NSString *namedSelectorWithSelectorStr = [NSString stringWithFormat:@"%@selector:", namedSelectorStr];
+                SEL namedSelectorWithSelector = NSSelectorFromString(namedSelectorWithSelectorStr);
+                if ([delegate respondsToSelector:namedSelectorWithSelector]) {
+                    *usedSelector = YES;
+                    return namedSelectorWithSelector;
+                }
             }
             SEL namedSelector = NSSelectorFromString(namedSelectorStr);
             if ([delegate respondsToSelector:namedSelector]) {
@@ -146,11 +148,13 @@
                 return namedSelector;
             }
         }
-        NSString *baseSelectorWithSelectorStr = [NSString stringWithFormat:@"%@selector:", baseSelectorStr];
-        SEL baseSelectorWithSelector = NSSelectorFromString(baseSelectorWithSelectorStr);
-        if ([delegate respondsToSelector:baseSelectorWithSelector]) {
-            *usedSelector = YES;
-            return baseSelectorWithSelector;
+        if (_selector) {
+            NSString *baseSelectorWithSelectorStr = [NSString stringWithFormat:@"%@selector:", baseSelectorStr];
+            SEL baseSelectorWithSelector = NSSelectorFromString(baseSelectorWithSelectorStr);
+            if ([delegate respondsToSelector:baseSelectorWithSelector]) {
+                *usedSelector = YES;
+                return baseSelectorWithSelector;
+            }
         }
         SEL baseSelector = NSSelectorFromString(baseSelectorStr);
         if ([delegate respondsToSelector:baseSelector]) {
