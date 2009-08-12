@@ -57,20 +57,26 @@
         _delegate       = [[opts valueForKey:@"delegate"] nonretainedObjectValue];
         _name           = [[opts valueForKey:@"name"] retain];
 
-        if ([_delegate respondsToSelector:@selector(restDefaultOptions)]) {
-            NSMutableDictionary *compositeOptions = [NSMutableDictionary dictionary];
-            NSDictionary *defaultOptions = [_delegate performSelector:@selector(restDefaultOptions)];
-            if (defaultOptions) {
-                [compositeOptions addEntriesFromDictionary:defaultOptions];
+        NSDictionary *defaultOptions = nil;
+        
+        if (_name) {
+            SEL namedSelector = NSSelectorFromString([NSString stringWithFormat:@"%@RestDefaultOptions", _name]);
+            if ([_delegate respondsToSelector:namedSelector]) {
+                defaultOptions = [_delegate performSelector:namedSelector];
             }
-            if (opts) {
-                [compositeOptions addEntriesFromDictionary:opts];
-            }
-            _options = [compositeOptions retain];
         }
-        else {
-            _options = [opts retain];
+        if (!defaultOptions && [_delegate respondsToSelector:@selector(restDefaultOptions)]) {
+            defaultOptions = [_delegate performSelector:@selector(restDefaultOptions)];
         }
+        
+        NSMutableDictionary *compositeOptions = [NSMutableDictionary dictionary];
+        if (defaultOptions) {
+            [compositeOptions addEntriesFromDictionary:defaultOptions];
+        }
+        if (opts) {
+            [compositeOptions addEntriesFromDictionary:opts];
+        }
+        _options = [compositeOptions retain];
         
         _object         = obj;
         _timeout        = 30.0;
