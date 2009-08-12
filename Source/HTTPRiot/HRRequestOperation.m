@@ -26,6 +26,7 @@
 - (NSURL *)composedURL;
 + (id)handleResponse:(NSHTTPURLResponse *)response error:(NSError **)error;
 + (NSString *)buildQueryStringFromParams:(NSDictionary *)params;
++ (NSDictionary *)dictionary:(NSDictionary *)defaultsDict mergedWithDictionary:(NSDictionary *)newDict;
 - (void)finish;
 @end
 
@@ -69,14 +70,7 @@
             defaultOptions = [_delegate performSelector:@selector(restDefaultOptions)];
         }
         
-        NSMutableDictionary *compositeOptions = [NSMutableDictionary dictionary];
-        if (defaultOptions) {
-            [compositeOptions addEntriesFromDictionary:defaultOptions];
-        }
-        if (opts) {
-            [compositeOptions addEntriesFromDictionary:opts];
-        }
-        _options = [compositeOptions retain];
+        _options = [[HRRequestOperation dictionary:defaultOptions mergedWithDictionary:opts] retain];
         
         _object         = obj;
         _timeout        = 30.0;
@@ -511,4 +505,42 @@
     
     return @"";
 }
+
++ (NSDictionary *)dictionary:(NSDictionary *)defaultsDict mergedWithDictionary:(NSDictionary *)newDict {
+    if (!defaultsDict && !newDict) {
+        return nil;
+    }
+    
+    NSMutableDictionary *compositeDict = [NSMutableDictionary dictionary];
+    if (defaultsDict) {
+        [compositeDict addEntriesFromDictionary:defaultsDict];
+    }
+    if (newDict) {
+        [compositeDict addEntriesFromDictionary:newDict];
+    }
+    if (defaultsDict && newDict) {
+        for (id key in [[defaultsDict allKeys] arrayByAddingObjectsFromArray:[newDict allKeys]]) {
+            id defaultValue = [defaultsDict objectForKey:key];
+            id value = [newDict objectForKey:key];
+            if (defaultValue) {
+                if (value) {
+                    if ([value isKindOfClass:[NSDictionary class]]) {
+                        [compositeDict setObject:[self dictionary:defaultValue mergedWithDictionary:value] forKey:key];
+                    }
+                    else {
+                        [compositeDict setObject:defaultValue forKey:key];
+                    }
+                }
+                else {
+                    [compositeDict setObject:defaultValue forKey:key];
+                }
+            }
+            else if (value) {
+                [compositeDict setObject:value forKey:key];
+            }
+        }
+    }
+    return compositeDict;
+}
+
 @end
