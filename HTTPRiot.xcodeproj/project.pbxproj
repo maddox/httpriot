@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		552135BB1031ECD000549FF7 /* NSString+CapitalizedFirstWord.h in Headers */ = {isa = PBXBuildFile; fileRef = 5560902B102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h */; };
+		552135BC1031ECD100549FF7 /* NSString+CapitalizedFirstWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560902C102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m */; };
 		5560902D102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h in Headers */ = {isa = PBXBuildFile; fileRef = 5560902B102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.h */; };
 		5560902E102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560902C102F0A0B003B0D68 /* NSString+CapitalizedFirstWord.m */; };
 		D00045D70FF2D5DB00CCAF1B /* ISAPeopleDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00045D60FF2D5DB00CCAF1B /* ISAPeopleDetailController.m */; };
@@ -604,6 +606,7 @@
 				D0A6E4150FFD39F100012097 /* HRBase64.h in Headers */,
 				D03982E70FFD6385005FECE7 /* HROperationQueue.h in Headers */,
 				D0869053100543900061BA64 /* DDXML.h in Headers */,
+				552135BB1031ECD000549FF7 /* NSString+CapitalizedFirstWord.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +824,7 @@
 				D00048250FF35B0E00CCAF1B /* NSObject+InvocationUtils.m in Sources */,
 				D0A6E4160FFD39F100012097 /* HRBase64.m in Sources */,
 				D03982E80FFD6385005FECE7 /* HROperationQueue.m in Sources */,
+				552135BC1031ECD100549FF7 /* NSString+CapitalizedFirstWord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,6 +18,14 @@
 @protocol HRResponseDelegate <NSObject>
 @optional
 /**
+ * Called when the options dictionary is being configured. This gives your delegate the
+ * opportunity to inject default options that should be used by every request.
+ *
+ * @return the default options dictionary
+ */
+- (NSDictionary *)restDefaultOptions;
+
+/**
  * Called when the resource was succeffully fetched and encoded
  *
  * @param connection The connection object for the current request

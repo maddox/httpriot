@@ -54,12 +54,27 @@
         _isCancelled    = NO;
         _requestMethod  = method;
         _path           = [urlPath copy];
-        _options        = [opts retain];
+        _delegate       = [[opts valueForKey:@"delegate"] nonretainedObjectValue];
+        _name           = [[opts valueForKey:@"name"] retain];
+
+        if ([_delegate respondsToSelector:@selector(restDefaultOptions)]) {
+            NSMutableDictionary *compositeOptions = [NSMutableDictionary dictionary];
+            NSDictionary *defaultOptions = [_delegate performSelector:@selector(restDefaultOptions)];
+            if (defaultOptions) {
+                [compositeOptions addEntriesFromDictionary:defaultOptions];
+            }
+            if (opts) {
+                [compositeOptions addEntriesFromDictionary:opts];
+            }
+            _options = [compositeOptions retain];
+        }
+        else {
+            _options = [opts retain];
+        }
+        
         _object         = obj;
         _timeout        = 30.0;
-        _delegate       = [[opts valueForKey:@"delegate"] nonretainedObjectValue];
         _selector       = selector;
-        _name           = [[opts valueForKey:@"name"] retain];
         _formatter      = [[self formatterFromFormat] retain];
     }
 
