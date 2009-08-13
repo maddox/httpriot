@@ -348,6 +348,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setTimeoutInterval:_timeout];
+    [request setHTTPShouldHandleCookies:YES];
     [self setDefaultHeadersForRequest:request];
     [self setAuthHeadersForRequest:request];
     
